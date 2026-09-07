@@ -1,0 +1,33 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+bin/
+build/
+
+# Go environment and test output
+*.out
+*.test
+vendor/
+go.work
+go.work.sum
+
+# Environment variables (SECURITY RISK: Never commit these!)
+.env
+*.local
+.env.*
+
+# Mac OS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VSCode / IDE
+.vscode/
+.idea/
+*.swp
+
+# Docker / Postgres Data (If mistakenly created here)
+pgdata/
