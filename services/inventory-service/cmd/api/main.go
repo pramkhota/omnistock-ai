@@ -4,8 +4,10 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq" // Important: anonymous import for postgres driver
 
 	"omnistock-ai/services/inventory-service/internal/handler/http"
@@ -14,8 +16,18 @@ import (
 )
 
 func main() {
-	// 1. Setup Database Connection (User: postgres, Pass: password, DB: inventory_db)
-	dbURL := "postgres://postgres:password@127.0.0.1:5433/inventory_db?sslmode=disable"
+
+	if err := godotenv.Load(); err != nil {
+		log.Println("Warning: No .env file found, falling back to system environment variables")
+	}
+
+	dbURL := os.Getenv("INVENTORY_DB_URL")
+	serverPort := os.Getenv("INVENTORY_PORT")
+
+	if dbURL == "" || serverPort == "" {
+		log.Fatal("Error: INVENTORY_DB_URL or INVENTORY_PORT is not set in .env")
+	}
+
 	db, err := sql.Open("postgres", dbURL)
 	if err != nil {
 		log.Fatalf("failed to open database: %v", err)
