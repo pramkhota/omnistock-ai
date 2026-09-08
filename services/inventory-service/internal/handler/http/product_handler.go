@@ -20,6 +20,7 @@ func NewProductHandler(router *gin.Engine, us domain.ProductUsecase) {
 
 	// Registering the route (Method POST)
 	router.POST("/api/v1/products", handler.CreateProduct)
+	router.GET("/api/v1/products", handler.GetAllProducts)
 }
 
 // CreateProduct handles the HTTP POST request for creating a new product
@@ -43,5 +44,19 @@ func (h *ProductHandler) CreateProduct(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "product created successfully",
 		"data":    product,
+	})
+}
+
+// GetAllProducts handles the HTTP GET request to list all products
+func (h *ProductHandler) GetAllProducts(c *gin.Context) {
+	products, err := h.usecase.GetAllProducts()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "failed to fetch products"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "success",
+		"data":    products,
 	})
 }

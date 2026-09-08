@@ -25,6 +25,7 @@ type ProductRepository interface {
 	GetByID(id int) (*Product, error)
 	ListAll() ([]*Product, error)
 	UpdateStock(id int, qty int) error
+	ReserveStock(sku string, quantity int) error
 }
 
 // ProductUsecase defines the contract for business logic operations.
@@ -32,4 +33,5 @@ type ProductUsecase interface {
 	CreateProduct(product *Product) error
 	GetProduct(id int) (*Product, error)
 	GetAllProducts() ([]*Product, error)
+	ReserveStock(sku string, quantity int) error
 }

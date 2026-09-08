@@ -31,3 +31,6 @@ go.work.sum
 
 # Docker / Postgres Data (If mistakenly created here)
 pgdata/
+
+# Database GUI Extensions
+*.session.sql

@@ -41,5 +41,13 @@ func (u *productUsecase) GetProduct(id int) (*domain.Product, error) {
 
 // GetAllProducts retrieves all products. (To be implemented)
 func (u *productUsecase) GetAllProducts() ([]*domain.Product, error) {
-	return nil, nil
+	return u.repo.ListAll()
+}
+
+// ReserveStock validates and processes the stock reservation request
+func (u *productUsecase) ReserveStock(sku string, quantity int) error {
+	if sku == "" || quantity <= 0 {
+		return errors.New("invalid reservation request")
+	}
+	return u.repo.ReserveStock(sku, quantity)
 }

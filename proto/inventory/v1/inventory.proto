@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package inventory.v1;
+option go_package = "omnistock-ai/proto/inventory/v1";
+
+service InventoryService {
+  rpc ReserveStock (ReserveStockRequest) returns (ReserveStockResponse);
+}
+
+message ReserveStockRequest {
+  string product_sku = 1;
+  int32 quantity = 2;
+}
+
+message ReserveStockResponse {
+  bool success = 1;
+  string message = 2;
+}
