@@ -17,3 +17,6 @@ test-inventory:
 
 test-oms:
 	go test ./services/oms-service/internal/usecase -v
+
+run-ai:
+	go run services/ai-agent-service/cmd/api/main.go

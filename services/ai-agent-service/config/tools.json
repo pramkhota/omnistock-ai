@@ -1,0 +1,30 @@
+[
+  {
+    "function_declarations": [
+      {
+        "name": "swap_item",
+        "description": "Call this when the picker finds a damaged item but there are spares available in the bin. This will swap the item and update inventory.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sku": { "type": "string", "description": "The Product SKU to swap" },
+            "qty": { "type": "integer", "description": "Quantity to swap" }
+          },
+          "required": ["sku", "qty"]
+        }
+      },
+      {
+        "name": "abort_order",
+        "description": "Call this when the picker finds a damaged item and there are NO spares left. This will abort the order.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "order_ref": { "type": "string", "description": "The Order Reference number (e.g. ORD-001)" },
+            "sku": { "type": "string", "description": "The Product SKU that is out of stock" }
+          },
+          "required": ["order_ref", "sku"]
+        }
+      }
+    ]
+  }
+]
