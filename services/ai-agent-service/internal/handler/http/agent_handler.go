@@ -25,6 +25,7 @@ func NewAgentHandler(router *gin.Engine, us usecase.AgentUsecase) {
 // ChatRequest represents the incoming JSON payload from the user
 type ChatRequest struct {
 	Message string `json:"message" binding:"required"`
+	Role    string `json:"role"` // "picker" or "packer", defaults to "picker"
 }
 
 // Chat handles the HTTP request to interact with the AI agent
@@ -37,9 +38,13 @@ func (h *AgentHandler) Chat(c *gin.Context) {
 		return
 	}
 
+	if req.Role == "" {
+		req.Role = "picker"
+	}
+
 	// 2. Send the message to the AI Usecase
 	// We pass the Request Context so if the user closes the browser, the request can be cancelled
-	reply, err := h.usecase.ChatWithAgent(c.Request.Context(), req.Message)
+	reply, err := h.usecase.ChatWithAgent(c.Request.Context(), req.Role, req.Message)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
